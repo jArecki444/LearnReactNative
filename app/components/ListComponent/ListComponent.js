@@ -17,7 +17,7 @@ export default class ListComponent extends Component {
   }
 
   makeRemoteRequest = () => {
-    const url = `https://randomuser.me/api/?results=50`;
+    const url = `https://randomuser.me/api/?results=25`;
 
     fetch(url)
       .then(res => res.json())
@@ -45,16 +45,23 @@ export default class ListComponent extends Component {
     );
   };
 
+  onPress(item){
+    this.props.navigation.navigate('Details',{
+        item: item
+    });
+}
+
   render() {
     return (
       <FlatList
         data={this.state.data}
         renderItem={({ item }) => (
-          <ListItem
+        <ListItem
             title={`${item.name.first} ${item.name.last}`}
             subtitle={item.email}
             leftAvatar={{ source: { uri: item.picture.thumbnail } }}
             containerStyle={{ borderBottomWidth: 0 }}
+            onPress={() => {this.onPress(item)}}
           />
         )}
         keyExtractor={item => item.email}
